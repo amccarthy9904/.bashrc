@@ -1,6 +1,6 @@
 #~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# for examples TESTESTEST
 source ~/.git-completion.bash
 
 # If not running interactively, don't do anything
@@ -63,10 +63,12 @@ parse_git_branch() {
 }
 
 if [ "$color_prompt" = yes ]; then
-    PS1="\n\[\033[38;5;74m\]\u\[\e[0m\]\[\e[00;37m\]\[\033[38;5;143m\]@\[\e[0m\]\[\033[38;5;143m\]\h\[\e[0m\]\[\e[00;37m\] \[\033[38;5;62m\]\A \[\e[0m\]\[\033[38;5;203m\]\w\[\e[0m\]\[\e[01;37m\]\[\e[0m\]\[\033[38;5;76m\]\$(parse_git_branch) \[\033[38;5;147m\]\n" 
-    #PS1="\n\[\033[38;5;74m\]\u\[\e[0m\]\[\e[00;37m\]@\[\e[0m\]\[\033[38;5;143m\]\h\[\e[0m\]\[\e[00;37m\] \t \[\e[0m\]\[\033[38;5;203m\]\w\[\e[0m\]\[\e[01;37m\] \[\e[0m\]  \[\033[38;5;147m\]\n" 
-    #PS1="\n\[\033[38;5;74m\]\u\[\e[0m\]\[\e[00;37m\]@\[\e[0m\]\[\033[38;5;143m\]\h\[\e[0m\]\[\e[00;37m\] \t \[\e[0m\]\[\033[38;5;203m\]\w\[\e[0m\]\[\e[01;37m\] \[\e[0m\]\n$ " 
-    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    
+    #PS1="\n\[\e[0m\]\[\033[38;5;97m\]\w\$(parse_git_branch) \[\033[38;5;147m\]\n" #directory and git branch 
+    PS1="\n\[\033[38;5;62m\]\u  \[\e[0m\]\[\033[38;5;97m\]\w\$(parse_git_branch) \[\033[38;5;147m\]\n" #user directory and git branch 
+    #PS1="\n\[\033[38;5;62m\]\u@\[\033[38;5;62m\]\h \[\e[0m\]\[\033[38;5;97m\]\w\$(parse_git_branch) \[\033[38;5;147m\]\n" #user@host directory git branch 
+    #PS1="\n\[\033[38;5;62m\]\u@\[\033[38;5;62m\]\h \[\033[38;5;62m\]\A \[\e[0m\]\[\033[38;5;97m\]\w\[\033[38;5;72m\]\$(parse_git_branch) \[\033[38;5;147m\]\n" #user@host time directory git branch 
+
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -84,16 +86,19 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color'
+    #LS_COLORS='di=96:fi=96:ln=96:pi=96:so=96:bd=96:cd=96:or=96:mi=96:ex=96'; export LS_COLORS
+    #LS_COLORS='di=1;4;31;42:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
+    
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
-fi
+    eval `dircolors -b ~/.dircolorsrc`
+    export LS_OPTIONS='--color=auto'
+fi 
 
-# colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
@@ -102,7 +107,8 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+#   sleep 10; 
+
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
